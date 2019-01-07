@@ -6,7 +6,7 @@ var rimraf = require('rimraf')
 var access = require('./helpers/access')
 
 describe('module', function () {
-  this.timeout(30000)
+  this.timeout(300000)
 
   describe('with an app with asar', function (test) {
     var dest = 'test/fixtures/out/foo/bar/'
