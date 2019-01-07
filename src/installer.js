@@ -30,7 +30,7 @@ var sanitizePackageNameParts = function (parts) {
 var getAppId = function (name, website) {
   var host = 'electron.atom.io'
   if (website) {
-    var urlObject = url.parse(website)
+    var urlObject = new url.URL(website)
     if (urlObject.host) host = urlObject.host
   }
   var parts = host.split('.')
