@@ -1,21 +1,22 @@
----
-dist: trusty
-sudo: required
-
 language: node_js
-
+node_js: 6
+dist: xenial
 services:
-  - docker
+- docker
+cache:
+  directories:
+  - node_modules
+branches:
+  only:
+  - master
+  - /^v\d+\.\d+\.\d+/
 
 before_install:
-  - docker pull endlessm/electron-flatpak
-
-install:
-  - docker run --privileged -v $PWD:/build:rw endlessm/electron-flatpak /bin/bash -c "cd /build && npm install"
+- docker pull malept/electron-forge-container:latest
 
 script:
-  - docker run --privileged -v $PWD:/build:rw endlessm/electron-flatpak /bin/bash -c "cd /build &&
-      flatpak install gnome org.freedesktop.Platform/x86_64/1.4 org.freedesktop.Sdk/x86_64/1.4
-                            org.freedesktop.Platform/i386/1.4 org.freedesktop.Sdk/i386/1.4 &&
-      flatpak install endless-electron-apps io.atom.electron.BaseApp/x86_64/master io.atom.electron.BaseApp/i386/master &&
-      DEBUG=electron-installer-flatpak,flatpak-bundler npm test"
+- sudo docker run --privileged --interactive --tty --volume $(pwd):/code malept/electron-forge-container:latest /bin/bash -c "flatpak install --user --no-deps --assumeyes --arch i386 --from https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-sdk-1.4.flatpakref &&
+    flatpak install --user --no-deps --assumeyes --arch i386 --from https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-runtime-1.4.flatpakref &&
+    flatpak install --user --no-deps --assumeyes --arch i386 --from https://s3-us-west-2.amazonaws.com/electron-flatpak.endlessm.com/electron-base-app-master.flatpakref &&
+    cd /code &&
+    DEBUG=electron-installer-flatpak,flatpak-bundler npm test"
