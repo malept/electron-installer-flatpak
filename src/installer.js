@@ -30,7 +30,7 @@ var sanitizePackageNameParts = function (parts) {
 var getAppId = function (name, website) {
   var host = 'electron.atom.io'
   if (website) {
-    var urlObject = url.parse(website)
+    var urlObject = new url.URL(website)
     if (urlObject.host) host = urlObject.host
   }
   var parts = host.split('.')
@@ -258,12 +258,10 @@ var createApplication = function (options, dir, callback) {
   var applicationDir = path.join(dir, 'lib', options.id)
   options.logger('Copying application to ' + applicationDir)
 
-  async.waterfall([
-    async.apply(fs.ensureDir, applicationDir),
-    async.apply(fs.copy, options.src, applicationDir)
-  ], function (err) {
-    callback(err && new Error('Error copying application directory: ' + (err.message || err)))
-  })
+  return fs.ensureDir(applicationDir)
+    .then(() => fs.copy(options.src, applicationDir))
+    .then(() => callback())
+    .catch(err => callback(new Error(`Error copying application directory: ${err.message || err}`)))
 }
 
 /**
