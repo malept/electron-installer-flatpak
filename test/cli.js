@@ -5,7 +5,7 @@ var access = require('./helpers/access')
 var spawn = require('./helpers/spawn')
 
 describe('cli', function () {
-  this.timeout(30000)
+  this.timeout(90000)
 
   describe('with an app with asar', function (test) {
     var dest = 'test/fixtures/out/foo/'
