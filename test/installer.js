@@ -21,7 +21,7 @@ describe('module', function () {
 
     after(() => fs.remove(dest))
 
-    it('generates a `.flatpak` package', () => access(`${dest}io.atom.electron.footest_master_ia32.flatpak`))
+    it('generates a `.flatpak` package', () => access(`${dest}org.unindented.footest_master_ia32.flatpak`))
   })
 
   describe('with an app without asar', () => {

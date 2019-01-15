@@ -71,14 +71,9 @@ class FlatpakInstaller extends common.ElectronInstaller {
       .then(pkg => {
         pkg = pkg || {}
 
-        this.defaults = {
-          id: getAppID(pkg.name, pkg.homepage),
-          productName: pkg.productName || pkg.name,
-          genericName: pkg.genericName || pkg.productName || pkg.name,
-          description: pkg.description,
-
+        this.defaults = Object.assign(common.getDefaultsFromPackageJSON(pkg), {
+          id: getAppID(pkg.name, common.getHomePage(pkg)),
           branch: 'master',
-          arch: undefined,
 
           base: 'io.atom.electron.BaseApp',
           baseVersion: 'master',
@@ -106,19 +101,10 @@ class FlatpakInstaller extends common.ElectronInstaller {
           ],
           modules: [],
 
-          bin: pkg.productName || pkg.name || 'electron',
           icon: path.resolve(__dirname, '../resources/icon.png'),
           files: [],
-          symlinks: [],
-
-          categories: [
-            'GNOME',
-            'GTK',
-            'Utility'
-          ],
-
-          mimeType: []
-        }
+          symlinks: []
+        })
 
         return this.defaults
       })
@@ -128,9 +114,9 @@ class FlatpakInstaller extends common.ElectronInstaller {
    * Bundle everything using `flatpak-bundler`.
    */
   createBundle () {
-    const name = `${this.options.id}_${this.options.branch}_${this.options.arch}.flatpak`
+    const name = `${this.appIdentifier}_${this.options.branch}_${this.options.arch}.flatpak`
     const dest = this.options.rename(this.options.dest, name)
-    this.options.logger('Creating package at ' + dest)
+    this.options.logger(`Creating package at ${dest}`)
     const extraExports = []
     if (this.options.icon && !_.isObject(this.options.icon)) {
       extraExports.push(this.pixmapIconPath)
@@ -140,7 +126,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
       [this.stagingDir, '/']
     ]
     const symlinks = [
-      [path.join('/lib', this.options.id, this.options.bin), path.join('/bin', this.options.bin)]
+      [path.join('/lib', this.appIdentifier, this.options.bin), path.join('/bin', this.options.bin)]
     ]
 
     return pify(flatpak.bundle)({
