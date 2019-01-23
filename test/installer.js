@@ -1,62 +1,49 @@
 'use strict'
 
-var installer = require('..')
-
-var rimraf = require('rimraf')
-var access = require('./helpers/access')
+const access = require('./helpers/access')
+const fs = require('fs-extra')
+const installer = require('..')
 
 describe('module', function () {
   this.timeout(90000)
 
-  describe('with an app with asar', function (test) {
-    var dest = 'test/fixtures/out/foo/bar/'
+  describe('with an app with asar', () => {
+    const dest = 'test/fixtures/out/foo/bar/'
 
-    before(function (done) {
-      installer({
-        src: 'test/fixtures/app-with-asar/',
-        dest: dest,
+    before(() => installer({
+      src: 'test/fixtures/app-with-asar/',
+      dest: dest,
 
-        options: {
-          arch: 'ia32'
-        }
-      }, done)
-    })
+      options: {
+        arch: 'ia32'
+      }
+    }))
 
-    after(function (done) {
-      rimraf(dest, done)
-    })
+    after(() => fs.remove(dest))
 
-    it('generates a `.flatpak` package', function (done) {
-      access(dest + 'io.atom.electron.footest_master_ia32.flatpak', done)
-    })
+    it('generates a `.flatpak` package', () => access(`${dest}org.unindented.footest_master_ia32.flatpak`))
   })
 
-  describe('with an app without asar', function (test) {
-    var dest = 'test/fixtures/out/bar/'
+  describe('with an app without asar', () => {
+    const dest = 'test/fixtures/out/bar/'
 
-    before(function (done) {
-      installer({
-        src: 'test/fixtures/app-without-asar/',
-        dest: dest,
+    before(() => installer({
+      src: 'test/fixtures/app-without-asar/',
+      dest: dest,
 
-        options: {
-          icon: {
-            '1024x1024': 'test/fixtures/icon.png'
-          },
-          bin: 'resources/cli/bar.sh',
-          section: 'devel',
-          priority: 'optional',
-          arch: 'x64'
-        }
-      }, done)
-    })
+      options: {
+        icon: {
+          '1024x1024': 'test/fixtures/icon.png'
+        },
+        bin: 'resources/cli/bar.sh',
+        section: 'devel',
+        priority: 'optional',
+        arch: 'x64'
+      }
+    }))
 
-    after(function (done) {
-      rimraf(dest, done)
-    })
+    after(() => fs.remove(dest))
 
-    it('generates a `.flatpak` package', function (done) {
-      access(dest + 'com.foo.bartest_master_x64.flatpak', done)
-    })
+    it('generates a `.flatpak` package', () => access(`${dest}com.foo.bartest_master_x64.flatpak`))
   })
 })
