@@ -3,9 +3,8 @@
 const _ = require('lodash')
 const common = require('electron-installer-common')
 const debug = require('debug')
-const flatpak = require('flatpak-bundler')
+const flatpak = require('@malept/flatpak-bundler')
 const path = require('path')
-const pify = require('pify')
 const url = require('url')
 
 const defaultLogger = debug('electron-installer-flatpak')
@@ -129,7 +128,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
       [path.join('/lib', this.appIdentifier, this.options.bin), path.join('/bin', this.options.bin)]
     ]
 
-    return pify(flatpak.bundle)({
+    return flatpak.bundle({
       id: this.options.id,
       branch: this.options.branch,
       base: this.options.base,
