@@ -13,5 +13,9 @@ branches:
 before_install:
 - docker pull malept/electron-forge-container:latest
 
+install:
+- npm install
+- npm update
+
 script:
 - sudo docker run --privileged --interactive --tty --volume $(pwd):/code malept/electron-forge-container:latest /bin/bash -c "cd /code && DEBUG=electron-installer-flatpak,flatpak-bundler npm test"
