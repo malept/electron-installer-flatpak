@@ -33,7 +33,7 @@ describe('module', function () {
 
       options: {
         icon: {
-          '1024x1024': 'test/fixtures/icon.png'
+          '256x256': 'test/fixtures/icon.png'
         },
         bin: 'resources/cli/bar.sh',
         section: 'devel',

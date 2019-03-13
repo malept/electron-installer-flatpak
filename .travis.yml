@@ -1,22 +1,25 @@
 language: node_js
 node_js: 6
 dist: xenial
-services:
-- docker
 cache:
+  npm: true
   directories:
-  - node_modules
+  - $HOME/.local/share/flatpak
 branches:
   only:
   - master
   - /^v\d+\.\d+\.\d+/
 
-before_install:
-- docker pull malept/electron-forge-container:latest
+env:
+  global:
+  - DEBUG: electron-installer-flatpak,flatpak-bundler
 
-script:
-- sudo docker run --privileged --interactive --tty --volume $(pwd):/code malept/electron-forge-container:latest /bin/bash -c "flatpak install --user --no-deps --assumeyes --arch i386 --from https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-sdk-1.4.flatpakref &&
-    flatpak install --user --no-deps --assumeyes --arch i386 --from https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-runtime-1.4.flatpakref &&
-    flatpak install --user --no-deps --assumeyes --arch i386 --from https://s3-us-west-2.amazonaws.com/electron-flatpak.endlessm.com/electron-base-app-master.flatpakref &&
-    cd /code &&
-    DEBUG=electron-installer-flatpak,flatpak-bundler npm test"
+before_install:
+- sudo add-apt-repository -y ppa:alexlarsson/flatpak
+- sudo apt update
+- sudo apt install --no-install-recommends -y flatpak-builder
+- ./test/install_runtimes.sh
+
+install:
+- npm install
+- npm update
