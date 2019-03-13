@@ -1,4 +1,4 @@
-# electron-installer-flatpak [![Version](https://img.shields.io/npm/v/electron-installer-flatpak.svg)](https://www.npmjs.com/package/electron-installer-flatpak) [![Build Status](https://img.shields.io/travis/endlessm/electron-installer-flatpak/master.svg)](http://travis-ci.org/endlessm/electron-installer-flatpak)
+# @malept/electron-installer-flatpak [![npm (scoped)](https://img.shields.io/npm/v/@malept/electron-installer-flatpak.svg)](https://www.npmjs.com/package/@malept/electron-installer-flatpak) [![Build Status](https://img.shields.io/travis/endlessm/electron-installer-flatpak/master.svg)](http://travis-ci.org/endlessm/electron-installer-flatpak)
 
 Create a flatpak for your Electron app. This is based off the
 [electron-installer-debian](https://github.com/unindented/electron-installer-debian)
@@ -28,13 +28,13 @@ flatpak --user install gnome org.freedesktop.Platform/x86_64/1.4 org.freedesktop
 For use from command-line:
 
 ```
-$ npm install -g electron-installer-flatpak
+$ npm install -g @malept/electron-installer-flatpak
 ```
 
 For use in npm scripts or programmatically:
 
 ```
-$ npm install --save-dev electron-installer-flatpak
+$ npm install --save-dev @malept/electron-installer-flatpak
 ```
 
 
@@ -93,10 +93,10 @@ How do you turn that into a flatpak package that your users can install?
 
 ### Command-Line
 
-If you want to run `electron-installer-flatpak` straight from the command-line, install the package globally:
+If you want to run `@malept/electron-installer-flatpak` straight from the command-line, install the package globally:
 
 ```
-$ npm install -g electron-installer-flatpak
+$ npm install -g @malept/electron-installer-flatpak
 ```
 
 And point it to your built app:
@@ -112,7 +112,7 @@ You'll end up with the package at `dist/installers/io.atom.electron.app_master_x
 If you want to run `electron-installer-flatpak` through npm, install the package locally:
 
 ```
-$ npm install --save-dev electron-installer-flatpak
+$ npm install --save-dev @malept/electron-installer-flatpak
 ```
 
 Edit the `scripts` section of your `package.json`:
@@ -128,7 +128,7 @@ Edit the `scripts` section of your `package.json`:
     "flatpak64": "electron-installer-flatpak --src dist/app-linux-x64/ --dest dist/installers/ --arch x64"
   },
   "devDependencies": {
-    "electron-installer-flatpak": "*",
+    "@malept/electron-installer-flatpak": "*",
     "electron-packager": "*",
     "electron-prebuilt": "*"
   }
@@ -148,13 +148,13 @@ You'll end up with the package at `dist/installer/io.atom.electron.app_master_x6
 Install the package locally:
 
 ```
-$ npm install --save-dev electron-installer-flatpak
+$ npm install --save-dev @malept/electron-installer-flatpak
 ```
 
 And write something like this:
 
 ```js
-var installer = require('electron-installer-flatpak')
+var installer = require('@malept/electron-installer-flatpak')
 
 var options = {
   src: 'dist/app-linux-x64/',
@@ -446,15 +446,15 @@ MIME types the application is able to open, used in the [`MimeType` field of the
 
 ## Meta
 
-* Code: `git clone git://github.com/endlessm/electron-installer-flatpak.git`
-* Home: <https://github.com/endlessm/electron-installer-flatpak/>
+* Code: `git clone https://github.com/malept/electron-installer-flatpak.git`
+* Home: <https://github.com/malept/electron-installer-flatpak/>
 
 
 ## Contributors
 
 * Daniel Perez Alvarez ([unindented@gmail.com](mailto:unindented@gmail.com))
 * Matt Watson ([mattdangerw@gmail.com](mailto:mattdangerw@gmail.com))
-
+* [Mark Lee](https://github.com/malept)
 
 ## License
 

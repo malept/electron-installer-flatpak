@@ -1,5 +1,5 @@
 {
-  "name": "electron-installer-flatpak",
+  "name": "@malept/electron-installer-flatpak",
   "description": "Create a Flatpak package for your Electron app.",
   "version": "0.8.0",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/endlessm/electron-installer-flatpak.git"
+    "url": "https://github.com/malept/electron-installer-flatpak.git"
   },
   "keywords": [
     "electron",

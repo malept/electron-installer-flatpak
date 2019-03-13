@@ -19,7 +19,7 @@
     "build": "npm run clean && npm run package32 && npm run flatpak32 && npm run package64 && npm run flatpak64"
   },
   "devDependencies": {
-    "electron-installer-flatpak": "*",
+    "@malept/electron-installer-flatpak": "*",
     "electron-packager": "*",
     "electron-prebuilt": "*",
     "rimraf": "*"
