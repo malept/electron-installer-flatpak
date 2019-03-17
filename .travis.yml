@@ -5,8 +5,6 @@ cache:
   npm: true
   directories:
   - $HOME/.local/share/flatpak
-services:
-- docker
 branches:
   only:
   - master
@@ -19,6 +17,8 @@ env:
 matrix:
   include:
   - env: USE_DOCKER=true
+    services:
+    - docker
   - env: USE_DOCKER=false
 
 before_install: test/ci/before_install.sh
