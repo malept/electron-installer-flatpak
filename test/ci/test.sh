@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ -z "$USE_DOCKER" ]]; then
+if [[ "$USE_DOCKER" = "true" ]]; then
     npm test
 else
     sudo docker run --privileged --interactive --tty --volume $(pwd):/code malept/electron-forge-container:latest /bin/bash -c "cd /code &&

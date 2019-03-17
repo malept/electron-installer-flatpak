@@ -19,6 +19,7 @@ env:
 matrix:
   include:
   - env: USE_DOCKER=true
+  - env: USE_DOCKER=false
 
 before_install: test/ci/before_install.sh
 

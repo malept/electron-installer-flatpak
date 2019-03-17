@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ -z "$USE_DOCKER" ]]; then
+if [[ "$USE_DOCKER" = "true" ]]; then
     docker pull malept/electron-forge-container:latest
 else
     sudo add-apt-repository -y ppa:alexlarsson/flatpak
