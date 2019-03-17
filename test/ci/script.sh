@@ -2,6 +2,7 @@
 
 if [[ "$USE_DOCKER" = "true" ]]; then
     sudo docker run --privileged --interactive --tty --volume $(pwd):/code malept/electron-forge-container:latest /bin/bash -c "cd /code &&
+        mkdir -p /var/run/dbus &&
         dbus-daemon --system &&
         /code/test/ci/install_runtimes.sh &&
         DEBUG=$DEBUG npm test"
