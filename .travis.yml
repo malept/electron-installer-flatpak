@@ -11,6 +11,7 @@ branches:
   only:
   - master
   - /^v\d+\.\d+\.\d+/
+  - with-docker
 
 env:
   global:
