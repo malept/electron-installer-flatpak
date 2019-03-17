@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -xe
 
 if [[ "$USE_DOCKER" = "true" ]]; then
     npm test
