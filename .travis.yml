@@ -5,6 +5,8 @@ cache:
   npm: true
   directories:
   - $HOME/.local/share/flatpak
+services:
+- docker
 branches:
   only:
   - master
@@ -13,13 +15,14 @@ branches:
 env:
   global:
   - DEBUG: electron-installer-flatpak,flatpak-bundler
+matrix:
+  include:
+  - env: USE_DOCKER=true
 
-before_install:
-- sudo add-apt-repository -y ppa:alexlarsson/flatpak
-- sudo apt update
-- sudo apt install --no-install-recommends -y flatpak-builder
-- ./test/install_runtimes.sh
+before_install: test/ci/before_install.sh
 
 install:
 - npm install
 - npm update
+
+test: test/ci/test.sh
