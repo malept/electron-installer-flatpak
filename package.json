@@ -33,16 +33,16 @@
     "node": ">= 8.0.0"
   },
   "dependencies": {
-    "@malept/flatpak-bundler": "^0.2.0",
+    "@malept/flatpak-bundler": "malept/flatpak-bundler",
     "debug": "^4.1.1",
-    "electron-installer-common": "^0.6.2",
+    "electron-installer-common": "electron-userland/electron-installer-common#drop-node-6",
     "fs-extra": "^8.0.1",
     "lodash": "^4.13.0",
     "temp": "^0.9.0",
     "yargs": "^13.2.4"
   },
   "devDependencies": {
-    "eslint": "^5.15.1",
+    "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-node": "^9.0.1",
