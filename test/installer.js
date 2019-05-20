@@ -10,7 +10,7 @@ describe('module', function () {
   describe('with an app with asar', () => {
     const dest = 'test/fixtures/out/foo/bar/'
 
-    before(() => installer({
+    before(async () => installer({
       src: 'test/fixtures/app-with-asar/',
       dest: dest,
 
@@ -19,15 +19,15 @@ describe('module', function () {
       }
     }))
 
-    after(() => fs.remove(dest))
+    after(async () => fs.remove(dest))
 
-    it('generates a `.flatpak` package', () => access(`${dest}org.unindented.footest_master_ia32.flatpak`))
+    it('generates a `.flatpak` package', async () => access(`${dest}org.unindented.footest_master_ia32.flatpak`))
   })
 
   describe('with an app without asar', () => {
     const dest = 'test/fixtures/out/bar/'
 
-    before(() => installer({
+    before(async () => installer({
       src: 'test/fixtures/app-without-asar/',
       dest: dest,
 
@@ -42,8 +42,8 @@ describe('module', function () {
       }
     }))
 
-    after(() => fs.remove(dest))
+    after(async () => fs.remove(dest))
 
-    it('generates a `.flatpak` package', () => access(`${dest}com.foo.bartest_master_x64.flatpak`))
+    it('generates a `.flatpak` package', async () => access(`${dest}com.foo.bartest_master_x64.flatpak`))
   })
 })
