@@ -33,9 +33,9 @@
     "node": ">= 8.0.0"
   },
   "dependencies": {
-    "@malept/flatpak-bundler": "malept/flatpak-bundler",
+    "@malept/flatpak-bundler": "^0.3.0",
     "debug": "^4.1.1",
-    "electron-installer-common": "electron-userland/electron-installer-common#drop-node-6",
+    "electron-installer-common": "^0.7.0",
     "fs-extra": "^8.0.1",
     "lodash": "^4.13.0",
     "temp": "^0.9.0",
@@ -44,9 +44,9 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^9.0.1",
-    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^6.0.2",
     "promise-retry": "^1.1.1",
