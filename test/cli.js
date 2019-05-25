@@ -1,6 +1,6 @@
 'use strict'
 
-const access = require('./helpers/access')
+const assert = require('assert')
 const fs = require('fs-extra')
 const { spawn } = require('electron-installer-common')
 
@@ -18,7 +18,7 @@ describe('cli', function () {
 
     after(async () => fs.remove(dest))
 
-    it('generates a `.flatpak` package', () => access(`${dest}org.unindented.footest_master_ia32.flatpak`))
+    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(`${dest}org.unindented.footest_master_ia32.flatpak`)))
   })
 
   describe('with an app without asar', function () {
@@ -30,6 +30,6 @@ describe('cli', function () {
       '--arch', 'x64'
     ]))
 
-    it('generates a `.flatpak` package', async () => access(`${dest}com.foo.bartest_master_x64.flatpak`))
+    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(`${dest}com.foo.bartest_master_x64.flatpak`)))
   })
 })
