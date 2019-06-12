@@ -9,6 +9,7 @@ describe('module', function () {
 
   describe('with an app with asar', () => {
     const dest = 'test/fixtures/out/foo/bar/'
+    const expectedFlatpak = `${dest}org.unindented.footest_master_ia32.flatpak`
 
     before(async () => installer({
       src: 'test/fixtures/app-with-asar/',
@@ -21,11 +22,12 @@ describe('module', function () {
 
     after(async () => fs.remove(dest))
 
-    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(`${dest}org.unindented.footest_master_ia32.flatpak`)))
+    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(expectedFlatpak), `${expectedFlatpak} not created`))
   })
 
   describe('with an app without asar', () => {
     const dest = 'test/fixtures/out/bar/'
+    const expectedFlatpak = `${dest}com.foo.bartest_master_x64.flatpak`
 
     before(async () => installer({
       src: 'test/fixtures/app-without-asar/',
@@ -44,6 +46,6 @@ describe('module', function () {
 
     after(async () => fs.remove(dest))
 
-    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(`${dest}com.foo.bartest_master_x64.flatpak`)))
+    it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(expectedFlatpak), `${expectedFlatpak} not created`))
   })
 })
