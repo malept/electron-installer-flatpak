@@ -7,6 +7,7 @@ const debug = require('debug')
 const flatpak = require('@malept/flatpak-bundler')
 const path = require('path')
 const { promisify } = require('util')
+const semver = require('semver')
 const url = require('url')
 
 const exec = promisify(childProcess.exec)
@@ -62,29 +63,38 @@ class FlatpakInstaller extends common.ElectronInstaller {
     return path.resolve(__dirname, '../resources/desktop.ejs')
   }
 
+  async determineBaseRuntimeAndSDK () {
+    const baseConfig = {
+      branch: 'stable',
+      baseVersion: 'stable',
+      runtime: 'org.freedesktop.Platform',
+      runtimeVersion: '1.6',
+      sdk: 'org.freedesktop.Sdk'
+    }
+    if (semver.gte(await common.readElectronVersion(this.userSupplied.src), '2.0.0-beta.1')) {
+      baseConfig.base = 'org.electronjs.Electron2.BaseApp'
+    } else {
+      baseConfig.base = 'io.atom.electron.BaseApp'
+    }
+
+    return baseConfig
+  }
+
   /**
    * Generate the hash of default options for the installer. Some come from the info
    * read from `package.json`, and some are hardcoded.
    */
   async generateDefaults () {
     const pkg = (await common.readMetadata(this.userSupplied)) || {}
-    this.defaults = Object.assign(common.getDefaultsFromPackageJSON(pkg), {
+    this.defaults = {
+      ...common.getDefaultsFromPackageJSON(pkg),
+      ...(await this.determineBaseRuntimeAndSDK()),
       id: getAppID(pkg.name, common.getHomePage(pkg)),
-      branch: 'master',
-
-      base: 'io.atom.electron.BaseApp',
-      baseVersion: 'master',
-      baseFlatpakref: 'https://s3-us-west-2.amazonaws.com/electron-flatpak.endlessm.com/electron-base-app-master.flatpakref',
       extraFlatpakBuilderArgs: [],
-      runtime: 'org.freedesktop.Platform',
-      runtimeVersion: '1.4',
-      runtimeFlatpakref: 'https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-runtime-1.4.flatpakref',
-      sdk: 'org.freedesktop.Sdk',
-      sdkFlatpakref: 'https://raw.githubusercontent.com/endlessm/flatpak-bundler/master/refs/freedesktop-sdk-1.4.flatpakref',
       finishArgs: [
         // X Rendering
         '--socket=x11', '--share=ipc',
-        // Open GL
+        // OpenGL
         '--device=dri',
         // Audio output
         '--socket=pulseaudio',
@@ -102,7 +112,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
       icon: path.resolve(__dirname, '../resources/icon.png'),
       files: [],
       symlinks: []
-    })
+    }
 
     return this.defaults
   }
