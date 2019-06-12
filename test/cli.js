@@ -9,7 +9,7 @@ describe('cli', function () {
 
   describe('with an app with asar', function () {
     const dest = 'test/fixtures/out/foo/'
-    const expectedFlatpak = `${dest}org.unindented.footest_master_ia32.flatpak`
+    const expectedFlatpak = `${dest}org.unindented.footest_stable_ia32.flatpak`
 
     before(async () => spawn('./src/cli.js', [
       '--src', 'test/fixtures/app-with-asar/',
@@ -24,7 +24,7 @@ describe('cli', function () {
 
   describe('with an app without asar', function () {
     const dest = 'test/fixtures/out/bar/'
-    const expectedFlatpak = `${dest}com.foo.bartest_master_x64.flatpak`
+    const expectedFlatpak = `${dest}com.foo.bartest_stable_x64.flatpak`
 
     before(async () => spawn('./src/cli.js', [
       '--src', 'test/fixtures/app-without-asar/',
