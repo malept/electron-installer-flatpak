@@ -23,3 +23,6 @@ before_install:
 install:
 - npm install
 - npm update
+
+script: npm run ci
+after_success: npm run codecov
