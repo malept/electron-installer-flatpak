@@ -2,7 +2,15 @@
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.0...master
+[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.1...master
+
+## [0.10.1] - 2019-10-29
+
+[0.10.1]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.0...v0.10.1
+
+### Fixed
+
+* Throw a better error when a homepage URL cannot be parsed (malept#14)
 
 ## [0.10.0] - 2019-06-15
 
