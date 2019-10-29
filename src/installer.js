@@ -5,41 +5,15 @@ const childProcess = require('child_process')
 const common = require('electron-installer-common')
 const debug = require('debug')
 const flatpak = require('@malept/flatpak-bundler')
+const { getAppID } = require('./getappid')
 const path = require('path')
 const { promisify } = require('util')
 const semver = require('semver')
-const url = require('url')
 
 const exec = promisify(childProcess.exec)
 
 const defaultLogger = debug('electron-installer-flatpak')
 const defaultRename = (dest, src) => path.join(dest, src)
-
-function sanitizePackageNameParts (parts) {
-  return parts.map(part => part.replace(/[^a-z0-9]/gi, '_').replace(/^[0-9]/, '_$&'))
-}
-
-function getAppID (name, website) {
-  let host = 'electron.atom.io'
-  if (website) {
-    const urlObject = new url.URL(website)
-    if (urlObject.host) {
-      host = urlObject.host
-    }
-  }
-  let parts = host.split('.')
-  if (parts[0] === 'www') {
-    parts.shift()
-  }
-  parts = sanitizePackageNameParts(parts.reverse())
-  parts.push(name)
-  let appID = parts.join('.')
-  while (appID.length > 255) {
-    parts.unshift()
-    appID = parts.join('.')
-  }
-  return appID
-}
 
 class FlatpakInstaller extends common.ElectronInstaller {
   get appIdentifier () {

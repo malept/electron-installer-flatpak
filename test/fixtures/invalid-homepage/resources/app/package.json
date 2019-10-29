@@ -1,0 +1,10 @@
+{
+  "name": "invalidhomepage",
+  "description": "Invalid Homepage test",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "./",
+
+  "private": true,
+  "main": "index.js"
+}

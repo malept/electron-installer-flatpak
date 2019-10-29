@@ -1,8 +1,12 @@
 'use strict'
 
 const assert = require('assert')
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
 const fs = require('fs-extra')
 const installer = require('..')
+
+chai.use(chaiAsPromised)
 
 describe('module', function () {
   this.timeout(90000)
@@ -47,5 +51,12 @@ describe('module', function () {
     after(async () => fs.remove(dest))
 
     it('generates a `.flatpak` package', async () => assert.ok(await fs.pathExists(expectedFlatpak), `${expectedFlatpak} not created`))
+  })
+
+  describe('with an invalid homepage', () => {
+    it('throws a human readable exception', () => chai.assert.isRejected(installer({
+      src: 'test/fixtures/invalid-homepage',
+      dest: 'test/fixtures/out/foo'
+    }), /^Could not parse the homepage/))
   })
 })
