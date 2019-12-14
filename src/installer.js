@@ -108,7 +108,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
         // Read/write home directory access
         '--filesystem=home',
         // Chromium uses a socket in tmp for its singleton check
-        '--filesystem=/tmp',
+        '--env=TMPDIR=/var/tmp',
         // Allow communication with network
         '--share=network',
         // System notifications with libnotify
