@@ -38,7 +38,6 @@
     "@malept/flatpak-bundler": "^0.3.0",
     "debug": "^4.1.1",
     "electron-installer-common": "^0.7.0",
-    "fs-extra": "^8.0.1",
     "lodash": "^4.13.0",
     "semver": "^6.1.1",
     "yargs": "^15.0.1"
@@ -53,6 +52,7 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "fs-extra": "^8.0.1",
     "mocha": "^6.0.2",
     "nyc": "^14.1.1",
     "rimraf": "^3.0.0"
