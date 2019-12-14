@@ -2,7 +2,7 @@
 <% if (productName) { %>Name=<%= productName %>
 <% } %><% if (description) { %>Comment=<%= description %>
 <% } %><% if (genericName) { %>GenericName=<%= genericName %>
-<% } %><% if (bin) { %>Exec=electron-wrapper %U
+<% } %><% if (desktopExec) { %>Exec=<%= desktopExec %> %U
 <% } %><% if (id) { %>Icon=<%= id %>
 <% } %>Type=Application
 StartupNotify=true

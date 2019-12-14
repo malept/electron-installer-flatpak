@@ -43,7 +43,14 @@ class FlatpakInstaller extends common.ElectronInstaller {
   }
 
   async createBinWrapper () {
-    await this.createTemplatedFile(path.join(this.resourcesDir, 'electron-wrapper.ejs'), path.join(this.stagingDir, this.baseAppDir, 'bin', 'electron-wrapper'), 0o755)
+    if (await this.requiresSandboxWrapper()) {
+      await this.createTemplatedFile(path.join(this.resourcesDir, 'electron-wrapper.ejs'), path.join(this.stagingDir, this.baseAppDir, 'bin', 'electron-wrapper'), 0o755)
+    }
+  }
+
+  async createDesktopFile () {
+    this.options.desktopExec = (await this.requiresSandboxWrapper()) ? 'electron-wrapper' : this.options.bin
+    await super.createDesktopFile()
   }
 
   async determineBaseRuntimeAndSDK () {
@@ -51,8 +58,12 @@ class FlatpakInstaller extends common.ElectronInstaller {
       branch: 'stable',
       baseVersion: 'stable',
       runtime: 'org.freedesktop.Platform',
-      runtimeVersion: '19.08',
       sdk: 'org.freedesktop.Sdk'
+    }
+    if (await this.requiresSandboxWrapper()) {
+      baseConfig.runtimeVersion = '19.08'
+    } else {
+      baseConfig.runtimeVersion = '1.6'
     }
     if (semver.gte(await common.readElectronVersion(this.userSupplied.src), '2.0.0-beta.1')) {
       baseConfig.base = 'org.electronjs.Electron2.BaseApp'
@@ -69,6 +80,19 @@ class FlatpakInstaller extends common.ElectronInstaller {
    */
   async generateDefaults () {
     const pkg = (await common.readMetadata(this.userSupplied)) || {}
+    const modules = []
+    if (await this.requiresSandboxWrapper()) {
+      modules.push({
+        name: 'zypak',
+        sources: [
+          {
+            type: 'git',
+            url: 'https://github.com/refi64/zypak',
+            tag: 'v2019.11beta.3'
+          }
+        ]
+      })
+    }
     this.defaults = {
       ...common.getDefaultsFromPackageJSON(pkg),
       ...(await this.determineBaseRuntimeAndSDK()),
@@ -90,16 +114,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
         // System notifications with libnotify
         '--talk-name=org.freedesktop.Notifications'
       ],
-      modules: [{
-        name: 'zypak',
-        sources: [
-          {
-            type: 'git',
-            url: 'https://github.com/refi64/zypak',
-            tag: 'v2019.11beta.3'
-          }
-        ]
-      }],
+      modules,
 
       icon: path.resolve(__dirname, '../resources/icon.png'),
       files: [],
@@ -107,6 +122,14 @@ class FlatpakInstaller extends common.ElectronInstaller {
     }
 
     return this.defaults
+  }
+
+  async requiresSandboxWrapper () {
+    if (typeof this._requiresSandboxWrapper === 'undefined') {
+      this._requiresSandboxWrapper = await common.hasSandboxHelper(this.sourceDir)
+    }
+
+    return this._requiresSandboxWrapper
   }
 
   /**
@@ -134,6 +157,8 @@ class FlatpakInstaller extends common.ElectronInstaller {
       [path.join('/lib', this.appIdentifier, this.options.bin), path.join('/bin', this.options.bin)]
     ]
 
+    const command = (await this.requiresSandboxWrapper()) ? 'electron-wrapper' : this.options.bin
+
     return flatpak.bundle({
       id: this.options.id,
       branch: this.options.branch,
@@ -147,7 +172,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
       sdk: this.options.sdk,
       sdkFlatpakref: this.options.sdkFlatpakref,
       finishArgs: this.options.finishArgs,
-      command: 'electron-wrapper',
+      command,
       files: files.concat(this.options.files),
       symlinks: symlinks.concat(this.options.symlinks),
       extraExports: extraExports,
