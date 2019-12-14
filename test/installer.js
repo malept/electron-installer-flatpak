@@ -13,14 +13,14 @@ describe('module', function () {
 
   describe('with an app with asar', () => {
     const dest = 'test/fixtures/out/foo/bar/'
-    const expectedFlatpak = `${dest}org.unindented.footest_stable_ia32.flatpak`
+    const expectedFlatpak = `${dest}org.unindented.footest_stable_x64.flatpak`
 
     before(async () => installer({
       src: 'test/fixtures/app-with-asar/',
       dest: dest,
 
       options: {
-        arch: 'ia32'
+        arch: 'x64'
       }
     }))
 

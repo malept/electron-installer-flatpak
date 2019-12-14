@@ -9,12 +9,12 @@ describe('cli', function () {
 
   describe('with an app with asar', function () {
     const dest = 'test/fixtures/out/foo/'
-    const expectedFlatpak = `${dest}org.unindented.footest_stable_ia32.flatpak`
+    const expectedFlatpak = `${dest}org.unindented.footest_stable_x64.flatpak`
 
     before(async () => spawn('./src/cli.js', [
       '--src', 'test/fixtures/app-with-asar/',
       '--dest', dest,
-      '--arch', 'ia32'
+      '--arch', 'x64'
     ]))
 
     after(async () => fs.remove(dest))

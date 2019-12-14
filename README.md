@@ -9,9 +9,10 @@ with minimal configuration.
 ## Requirements
 
 This tool requires `flatpak` and `flatpak-builder` >= 0.8.2 to be installed on
-your system. See http://flatpak.org/getting.html
+your system. See http://flatpak.org/getting.html . For Electron apps using
+Electron 6 and above, [`elfutils`](https://sourceware.org/elfutils/) is required.
 
-Building an electron flatpak requires installing a "base" flatpak
+Building a flatpak for an Electron app requires installing a "base" flatpak
 application with electron library dependencies. That base will be autoinstalled
 during an app build.
 
@@ -20,9 +21,12 @@ If you already are running flatpak apps you may have the freedesktop runtime
 installed. The following example will install the freedesktop runtime for both
 i386 and x86_64.
 ```
-flatpak --user remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
-flatpak --user install gnome org.freedesktop.Platform/x86_64/1.4 org.freedesktop.Platform/i386/1.4
+flatpak --user remote-add ----if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --user install gnome org.freedesktop.Platform/x86_64/1.6 org.freedesktop.Platform/i386/1.6
 ```
+
+Apps using Electron 6 or above require a runtime version of 19.08 instead of 1.6.
+Please note that as of 19.08, they have removed support for the i386 arch.
 
 ## Installation
 
@@ -373,6 +377,10 @@ modules: [
 ```
 
 See the [`modules` field of a flatpak-builder manifest](http://flatpak.org/flatpak/flatpak-docs.html#flatpak-builder) for more details.
+
+For apps using Electron 6 or above, the [`zypak`](https://github.com/refi64/zypak) module is
+included by default so sandbox support works correctly. Since it needs to compile the module,
+it only works when the host arch and target arch are the same.
 
 #### options.bin
 Type: `String`
