@@ -32,14 +32,14 @@
     "test": "npm run clean && npm run lint && npm run spec"
   },
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 10.0.0"
   },
   "dependencies": {
     "@malept/flatpak-bundler": "^0.3.0",
     "debug": "^4.1.1",
     "electron-installer-common": "^0.8.0",
     "lodash": "^4.17.15",
-    "semver": "^6.1.1",
+    "semver": "^7.1.1",
     "yargs": "^15.0.1"
   },
   "devDependencies": {
