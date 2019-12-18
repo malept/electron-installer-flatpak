@@ -32,7 +32,7 @@
     "test": "npm run clean && npm run lint && npm run spec"
   },
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 10.0.0"
   },
   "dependencies": {
     "@malept/flatpak-bundler": "^0.3.0",
