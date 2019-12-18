@@ -4,6 +4,23 @@
 
 [Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.1...master
 
+## [0.11.0] - 2019-12-17
+
+[0.11.0]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.1...v0.11.0
+
+### Added
+
+* Support for zypak for Electron >= 5 (malept#16)
+
+### Fixed
+
+* Force baseVersion and runtimeVersion to strings (port of endlessm#27)
+* Don't provide full access to `/tmp` (port of endlessm#27)
+
+### Removed
+
+* Node &lt; 8 support (malept#18)
+
 ## [0.10.1] - 2019-10-29
 
 [0.10.1]: https://github.com/malept/electron-installer-flatpak/compare/v0.10.0...v0.10.1
