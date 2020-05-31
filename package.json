@@ -26,6 +26,7 @@
   "scripts": {
     "ci": "nyc npm test",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "coverage": "nyc mocha && nyc report --reporter=text-lcov > coverage.lcov",
     "clean": "rimraf test/fixtures/out",
     "lint": "eslint .",
     "spec": "mocha",
