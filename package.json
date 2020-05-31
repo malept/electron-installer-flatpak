@@ -35,7 +35,7 @@
     "node": ">= 10.0.0"
   },
   "dependencies": {
-    "@malept/flatpak-bundler": "^0.3.0",
+    "@malept/flatpak-bundler": "^0.4.0",
     "debug": "^4.1.1",
     "electron-installer-common": "^0.10.0",
     "lodash": "^4.17.15",

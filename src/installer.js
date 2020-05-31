@@ -1,16 +1,12 @@
 'use strict'
 
 const _ = require('lodash')
-const childProcess = require('child_process')
 const common = require('electron-installer-common')
 const debug = require('debug')
 const flatpak = require('@malept/flatpak-bundler')
 const { getAppID } = require('./getappid')
 const path = require('path')
-const { promisify } = require('util')
 const semver = require('semver')
-
-const exec = promisify(childProcess.exec)
 
 const defaultLogger = debug('electron-installer-flatpak')
 const defaultRename = (dest, src) => path.join(dest, src)
@@ -144,12 +140,6 @@ class FlatpakInstaller extends common.ElectronInstaller {
       extraExports.push(this.pixmapIconPath)
     }
 
-    const flatpakBundlerVersion = (await exec('flatpak-builder --version')).toString().split(' ', 2)[1]
-
-    if (flatpakBundlerVersion.split('.').map(part => Number(part)) >= [0, 9, 9]) {
-      this.options.extraFlatpakBuilderArgs.push('--assumeyes')
-    }
-
     const files = [
       [this.stagingDir, '/']
     ]
@@ -164,22 +154,22 @@ class FlatpakInstaller extends common.ElectronInstaller {
       branch: this.options.branch,
       base: this.options.base,
       baseVersion: this.options.baseVersion.toString(),
-      baseFlatpakref: this.options.baseFlatpakref,
-      extraFlatpakBuilderArgs: this.options.extraFlatpakBuilderArgs,
       runtime: this.options.runtime,
       runtimeVersion: this.options.runtimeVersion.toString(),
-      runtimeFlatpakref: this.options.runtimeFlatpakref,
       sdk: this.options.sdk,
-      sdkFlatpakref: this.options.sdkFlatpakref,
       finishArgs: this.options.finishArgs,
       command,
-      files: files.concat(this.options.files),
-      symlinks: symlinks.concat(this.options.symlinks),
-      extraExports: extraExports,
       modules: this.options.modules
     }, {
       arch: this.options.arch,
-      bundlePath: dest
+      baseFlatpakref: this.options.baseFlatpakref,
+      bundlePath: dest,
+      extraExports: extraExports,
+      extraFlatpakBuilderArgs: this.options.extraFlatpakBuilderArgs,
+      files: files.concat(this.options.files),
+      runtimeFlatpakref: this.options.runtimeFlatpakref,
+      sdkFlatpakref: this.options.sdkFlatpakref,
+      symlinks: symlinks.concat(this.options.symlinks)
     })
   }
 }
