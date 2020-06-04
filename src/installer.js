@@ -34,6 +34,15 @@ class FlatpakInstaller extends common.ElectronInstaller {
     return path.join(this.resourcesDir, 'desktop.ejs')
   }
 
+  get flatpakrefs () {
+    const arch = flatpak.translateArch(this.options.arch)
+    return {
+      baseFlatpakref: this.options.baseFlatpakref || `app/${this.options.base}/${arch}/${this.options.baseVersion}`,
+      runtimeFlatpakref: this.options.runtimeFlatpakref || `runtime/${this.options.runtime}/${arch}/${this.options.runtimeVersion}`,
+      sdkFlatpakref: this.options.sdkFlatpakref || `runtime/${this.options.sdk}/${arch}/${this.options.runtimeVersion}`
+    }
+  }
+
   get resourcesDir () {
     return path.resolve(__dirname, '../resources')
   }
@@ -161,14 +170,12 @@ class FlatpakInstaller extends common.ElectronInstaller {
       command,
       modules: this.options.modules
     }, {
+      ...this.flatpakrefs,
       arch: this.options.arch,
-      baseFlatpakref: this.options.baseFlatpakref,
       bundlePath: dest,
       extraExports: extraExports,
       extraFlatpakBuilderArgs: this.options.extraFlatpakBuilderArgs,
       files: files.concat(this.options.files),
-      runtimeFlatpakref: this.options.runtimeFlatpakref,
-      sdkFlatpakref: this.options.sdkFlatpakref,
       symlinks: symlinks.concat(this.options.symlinks)
     })
   }
