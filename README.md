@@ -1,4 +1,4 @@
-# @malept/electron-installer-flatpak [![npm (scoped)](https://img.shields.io/npm/v/@malept/electron-installer-flatpak.svg)](https://www.npmjs.com/package/@malept/electron-installer-flatpak) [![Build Status](https://img.shields.io/travis/malept/electron-installer-flatpak/master.svg)](http://travis-ci.org/malept/electron-installer-flatpak) [![codecov](https://codecov.io/gh/malept/electron-installer-flatpak/branch/master/graph/badge.svg)](https://codecov.io/gh/malept/electron-installer-flatpak)
+# @malept/electron-installer-flatpak [![npm (scoped)](https://img.shields.io/npm/v/@malept/electron-installer-flatpak.svg)](https://www.npmjs.com/package/@malept/electron-installer-flatpak) [![Build Status](https://github.com/malept/electron-installer-flatpak/workflows/CI/badge.svg)](https://github.com/malept/electron-installer-flatpak/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/malept/electron-installer-flatpak/branch/master/graph/badge.svg)](https://codecov.io/gh/malept/electron-installer-flatpak)
 
 
 Create a flatpak for your Electron app. This is based off the

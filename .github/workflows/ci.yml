@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: |
+          sudo add-apt-repository -y ppa:alexlarsson/flatpak
+          sudo rm /etc/apt/sources.list.d/bazel.list
+          sudo apt update
+          sudo apt install --no-install-recommends -y flatpak-builder elfutils
+          ./test/install_runtimes.sh
+      - name: Flatpak Tooling Versions
+        run: |
+          flatpak --version
+          flatpak-builder --version
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ matrix.node-version }}-build-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - name: Install
+        run: |
+          npm install --engine-strict
+          npm update --no-save
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run coverage
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.lcov
+          env_vars: NODE_VERSION
