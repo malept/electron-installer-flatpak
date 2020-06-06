@@ -2,7 +2,15 @@
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.1...master
+[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.2...master
+
+## [0.11.2] - 2020-06-06
+
+[0.11.2]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.1...v0.11.2
+
+### Fixed
+
+* Provide defaults for the `*Flatpakref` options (malept#26)
 
 ## [0.11.1] - 2020-01-21
 
