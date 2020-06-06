@@ -1,5 +1,5 @@
 {
-  "name": "poopie",
+  "name": "exampleapp",
   "description": "An example app, built with Electron.",
   "version": "0.0.1",
   "license": "MIT",
@@ -12,16 +12,16 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "electron .",
-    "package32": "electron-packager . poopie --platform linux --arch ia32 --out dist/ --ignore \"(dist|node_modules/electron.*)\"",
-    "package64": "electron-packager . poopie --platform linux --arch x64 --out dist/ --ignore \"(dist|node_modules/electron.*)\"",
-    "flatpak32": "electron-installer-flatpak --src dist/poopie-linux-ia32/ --arch ia32 --config config.json",
-    "flatpak64": "electron-installer-flatpak --src dist/poopie-linux-x64/ --arch x64 --config config.json",
+    "package32": "electron-packager . --platform linux --arch ia32 --out dist",
+    "package64": "electron-packager . --platform linux --arch x64 --out dist",
+    "flatpak32": "electron-installer-flatpak --src dist/exampleapp-linux-ia32/ --arch ia32 --config config.json",
+    "flatpak64": "electron-installer-flatpak --src dist/exampleapp-linux-x64/ --arch x64 --config config.json",
     "build": "npm run clean && npm run package32 && npm run flatpak32 && npm run package64 && npm run flatpak64"
   },
   "devDependencies": {
-    "@malept/electron-installer-flatpak": "*",
-    "electron-packager": "*",
-    "electron-prebuilt": "*",
-    "rimraf": "*"
+    "@malept/electron-installer-flatpak": "^0.11.1",
+    "electron-packager": "^14.2.1",
+    "electron": "^9.0.0",
+    "rimraf": "^3.0.2"
   }
 }
