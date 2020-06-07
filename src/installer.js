@@ -47,6 +47,14 @@ class FlatpakInstaller extends common.ElectronInstaller {
     return path.resolve(__dirname, '../resources')
   }
 
+  /**
+   * Copy the application into the package.
+   */
+  async copyApplication () {
+    await super.copyApplication()
+    return this.updateSandboxHelperPermissions()
+  }
+
   async createBinWrapper () {
     if (await this.requiresSandboxWrapper()) {
       await this.createTemplatedFile(path.join(this.resourcesDir, 'electron-wrapper.ejs'), path.join(this.stagingDir, this.baseAppDir, 'bin', 'electron-wrapper'), 0o755)
