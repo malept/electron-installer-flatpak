@@ -1,17 +1,13 @@
 'use strict'
 
 const path = require('path')
-const electron = require('electron')
-const app = electron.app
-const Menu = electron.Menu
-const Tray = electron.Tray
-const BrowserWindow = electron.BrowserWindow
+const { app, BrowserWindow, Menu, Tray } = require('electron')
 
+let quitting = false
 let tray = null
 let win = null
-let quitting = false
 
-const createMenu = () => {
+function createMenu () {
   const appMenu = Menu.buildFromTemplate([
     {
       label: 'File',
@@ -29,11 +25,10 @@ const createMenu = () => {
   Menu.setApplicationMenu(appMenu)
 }
 
-const createTray = () => {
+function createTray () {
   const variant = (process.platform === 'darwin' ? 'Black' : 'White')
-  const iconPath = path.resolve(__dirname, `../../resources/Icon${variant}Template.png`)
 
-  tray = new Tray(iconPath)
+  tray = new Tray(path.resolve(__dirname, `../../resources/Icon${variant}Template.png`))
 
   const trayMenu = Menu.buildFromTemplate([
     {
@@ -55,17 +50,14 @@ const createTray = () => {
   tray.setContextMenu(trayMenu)
 }
 
-const createWindow = () => {
-  const iconPath = path.resolve(__dirname, '../../resources/Icon.png')
-  const winUrl = 'file://' + path.resolve(__dirname, '../renderer/index.html')
-
+function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 600,
     show: false,
-    icon: iconPath
+    icon: path.resolve(__dirname, '../../resources/Icon.png')
   })
-  win.loadURL(winUrl)
+  win.loadFile(path.resolve(__dirname, '..', 'renderer', 'index.html'))
 
   win.on('close', (evt) => {
     if (quitting) {
