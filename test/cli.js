@@ -11,7 +11,7 @@ describe('cli', function () {
     const dest = 'test/fixtures/out/foo/'
     const expectedFlatpak = `${dest}org.unindented.footest_stable_x64.flatpak`
 
-    before(async () => spawn('./src/cli.js', [
+    before(async () => spawn('./bin/electron-installer-flatpak.js', [
       '--src', 'test/fixtures/app-with-asar/',
       '--dest', dest,
       '--arch', 'x64'
@@ -26,7 +26,7 @@ describe('cli', function () {
     const dest = 'test/fixtures/out/bar/'
     const expectedFlatpak = `${dest}com.foo.bartest_stable_x64.flatpak`
 
-    before(async () => spawn('./src/cli.js', [
+    before(async () => spawn('./bin/electron-installer-flatpak.js', [
       '--src', 'test/fixtures/app-without-asar/',
       '--dest', dest,
       '--arch', 'x64'
