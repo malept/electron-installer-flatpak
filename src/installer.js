@@ -93,7 +93,7 @@ class FlatpakInstaller extends common.ElectronInstaller {
           {
             type: 'git',
             url: 'https://github.com/refi64/zypak',
-            tag: 'v2019.11beta.3'
+            tag: 'v2021.02'
           }
         ]
       })

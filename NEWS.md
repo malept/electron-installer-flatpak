@@ -4,6 +4,10 @@
 
 [Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.2...master
 
+### Fixed
+
+* Update zypak to v2021.02
+
 ## [0.11.2] - 2020-06-06
 
 [0.11.2]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.1...v0.11.2
