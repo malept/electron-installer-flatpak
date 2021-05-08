@@ -6,7 +6,7 @@
 
 ### Fixed
 
-* Update zypak to v2021.02
+* Update zypak to v2021.02 (malept#40)
 
 ## [0.11.2] - 2020-06-06
 
