@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.2...master
+[Unreleased]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.3...master
+
+## [0.11.3] - 2021-05-09
+
+[0.11.3]: https://github.com/malept/electron-installer-flatpak/compare/v0.11.2...v0.11.3
 
 ### Fixed
 
