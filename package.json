@@ -21,7 +21,7 @@
   ],
   "main": "src/installer.js",
   "bin": {
-    "electron-installer-flatpak": "bin/electron-installer-flatpakk.js"
+    "electron-installer-flatpak": "bin/electron-installer-flatpak.js"
   },
   "scripts": {
     "ci": "nyc npm test",
